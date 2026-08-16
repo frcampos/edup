@@ -35,20 +35,21 @@ git ls-files | grep -iE "\.(xlsx|xls|csv|ods)$"     # deve devolver vazio
 grep -rniE "api[_-]?key|token|secret" --include="*.js" --include="*.html" .
 ```
 
-## 3 · Endpoint do Arquivo — o ponto crítico
+## 3 · O Arquivo — avaliação real (Google Forms + Sheets, não backend próprio)
 
-O URL de escrita já está no JavaScript do lado do cliente, logo **já é público de facto**. Publicar o repositório não o expõe mais — mas expõe a sua *lógica*, e isso baixa o custo do abuso.
+Verificado por leitura de código e por teste prático (payloads de XSS injetados via `ingest()` num browser real, em `cardHTML` e em `openModal`): **zero execução**. `esc()` é aplicado de forma consistente em toda a superfície de saída; o identificador mostrado é recalculado no browser (hash, charset seguro) e nunca o valor submetido; o campo `destino` usa lista branca. Não há vulnerabilidade de XSS armazenado nos caminhos testados.
 
-Confirmar, antes de publicar, que o backend tem:
+- [x] Escape sistemático confirmado (`esc()`) — nada a corrigir
+- [x] `id_prompt` não é refletido diretamente — seguro por construção
+- [x] `destino` filtrado por lista branca — seguro por construção
 
-- [ ] limite de tamanho por submissão;
-- [ ] limite de taxa por IP;
-- [ ] validação dos campos aceites (rejeitar o que não corresponda ao esquema);
-- [ ] sanitização de HTML na submissão **e** na leitura;
-- [ ] procedimento de remoção de um registo, testado e funcional;
-- [ ] cópia de segurança da base do Arquivo.
+**O que fica por resolver — e não é um bloqueio à publicação do repositório:**
 
-**Este é o único item verdadeiramente bloqueante desta lista.**
+- [ ] Qualquer pessoa com as `entry.NNNNNN` pode submeter diretamente ao Google Forms, ignorando a interface do gerador. **Isto já é verdade hoje, no site em produção** — os `entry.NNNNNN` estão visíveis a quem abrir "Ver código-fonte" em `cardosolopes.net/.../eduprompt.html`. Tornar o repositório GitHub público **não aumenta esta exposição**; o código já está de facto público.
+- [x] Confirmado com Fernando: o campo `prompt` é "Texto de resposta longa" — sem validação de comprimento disponível nesse tipo de campo. Ver nota abaixo.
+- [ ] Não existe CAPTCHA nem limite de taxa nativo em formulários anónimos do Google Forms. A defesa prática contra abuso de volume continua a ser a moderação e o canal de remoção já documentado no `SECURITY.md`.
+- [ ] Nota de severidade baixa: um `id_prompt` forjado pode inflacionar artificialmente a contagem "repetida ×N" de um registo legítimo (efeito cosmético, sem risco de execução de código nem de corrupção do texto mostrado).
+- [ ] **Nota registada, sem ação — decisão de 2026-08-16.** O campo `prompt` no Google Forms é "Texto de resposta longa", que não suporta validação de comprimento nativa. Um texto anormalmente longo (acidental ou deliberado) não é risco de segurança — não permite execução de código —, apenas pode degradar a leitura de um registo ou o desempenho da página. Fernando decidiu não aplicar limite por agora. Retomar se algum dia se observar um registo assim no Arquivo: opção mais simples é um limite de comprimento em `repositorio_prompts.html` ao guardar `r.full`.
 
 ## 4 · Substituições no pacote de ficheiros
 

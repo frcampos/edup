@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Fernando Rui Campos">
+<meta name="description" content="EduPrompt — gerador de prompts pedagógicas, arquivo público e manual de utilização.">
+<title>EduPrompt</title>
+<style>
+:root{--azul:#1F4E79;--azul2:#2E6DA4;--suave:#EEF4FA;--linha:#D8DEE4;--texto:#232323;--cinza:#6B6B6B}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Segoe UI',system-ui,-apple-system,sans-serif;color:var(--texto);
+  background:#F6F8FA;line-height:1.6;display:flex;flex-direction:column;min-height:100vh}
+header{background:linear-gradient(135deg,var(--azul),var(--azul2));color:#fff;padding:52px 24px 44px;text-align:center}
+header h1{margin:0 0 8px;font-size:2.3rem;letter-spacing:-.5px}
+header p{margin:0 auto;max-width:620px;opacity:.93;font-size:1.02rem}
+main{flex:1;max-width:940px;margin:0 auto;padding:34px 24px 10px;width:100%}
+.cartoes{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px}
+.cartao{background:#fff;border:1px solid var(--linha);border-radius:11px;padding:22px;
+  text-decoration:none;color:inherit;display:flex;flex-direction:column;
+  transition:transform .16s,box-shadow .16s,border-color .16s}
+.cartao:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(31,78,121,.14);border-color:var(--azul2)}
+.icone{font-size:1.9rem;margin-bottom:8px}
+.cartao h2{margin:0 0 6px;font-size:1.1rem;color:var(--azul)}
+.cartao p{margin:0;font-size:.92rem;color:#454545;flex:1}
+.cartao .ir{margin-top:14px;font-size:.86rem;font-weight:600;color:var(--azul2)}
+.nota{background:var(--suave);border-left:5px solid var(--azul);border-radius:0 8px 8px 0;
+  padding:14px 18px;margin-top:26px;font-size:.9rem}
+.nota b{color:var(--azul)}
+footer{border-top:1px solid var(--linha);margin-top:30px;padding:18px 24px 26px;
+  text-align:center;font-size:.82rem;color:var(--cinza)}
+footer a{color:var(--azul)}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>EduPrompt</h1>
+  <p>Prompts pedagógicas estruturadas, ancoradas no Decreto-Lei n.º 54/2018, no PASEO e nas Aprendizagens Essenciais.</p>
+</header>
+
+<main>
+  <div class="cartoes">
+
+    <a class="cartao" href="eduprompt.html">
+      <div class="icone">✏️</div>
+      <h2>Gerador</h2>
+      <p>Constrói a prompt a partir de um formulário pedagógico: contexto, tarefa, conteúdo, requisitos e formato.</p>
+      <span class="ir">Abrir o gerador →</span>
+    </a>
+
+    <a class="cartao" href="repositorio_prompts.html">
+      <div class="icone">🗂️</div>
+      <h2>Arquivo</h2>
+      <p>Repositório público das prompts efetivamente construídas. Pesquisável e reutilizável — reabra qualquer uma no gerador.</p>
+      <span class="ir">Consultar o Arquivo →</span>
+    </a>
+
+    <a class="cartao" href="Manual_EduPrompt_Interativo.html">
+      <div class="icone">📘</div>
+      <h2>Manual</h2>
+      <p>Como usar as três peças, com o enquadramento legal e o capítulo de proteção de dados.</p>
+      <span class="ir">Ler o manual →</span>
+    </a>
+
+  </div>
+
+  <div class="nota">
+    <b>⚠ Antes de submeter:</b> o Arquivo é público, mundial e sem autenticação. Escreva sempre por
+    <b>contagens e barreiras funcionais</b> — nunca nomes, iniciais, números de processo ou diagnósticos.
+    Ver o capítulo de proteção de dados no manual.
+  </div>
+</main>
+
+<footer>
+  © 2026 <b>Fernando Rui Campos</b> — Agrupamento de Escolas Cardoso Lopes<br>
+  Código sob licença MIT · conteúdos sob <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.pt" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>
+</footer>
+
+<!-- Estatísticas de acesso (Cloudflare Web Analytics — sem cookies, sem consentimento).
+     Descomentar e substituir o token depois de criar a conta:
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon='{"token": "SEU_TOKEN_AQUI"}'></script>
+-->
+</body>
+</html>

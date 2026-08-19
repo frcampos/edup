@@ -141,11 +141,21 @@ O GitHub Pages **não** tem estatísticas. O separador *Insights → Traffic* do
 
 ### Cloudflare Web Analytics — instalação
 
-1. Conta gratuita em `dash.cloudflare.com` → **Web Analytics** → **Add a site**.
-2. Indicar `frcampos.github.io/edup` (ou o subdomínio).
-3. Copiar o *snippet* e substituir o bloco comentado no fim do `index.html`.
-4. Repetir o mesmo *snippet* nos outros três HTML, antes de `</body>`, para ter números por página.
-5. `git add . && git commit -m "Adiciona estatísticas de acesso" && git push`
+O ecossistema vive em dois sítios ao mesmo tempo: `cardosolopes.net` (produção atual) e `frcampos.github.io/edup` (novo). Para saber qual está efetivamente a ser usado, cada domínio precisa do seu próprio *token* — mas o Cloudflare **não permite dois `<script>` de beacon na mesma página**. A solução está já pronta: `analytics.js`, um único ficheiro que escolhe o token certo consoante o domínio onde a página corre naquele momento. As quatro páginas incluem-no da mesma forma; nada muda entre os dois sítios.
+
+1. Conta gratuita em `dash.cloudflare.com`.
+2. **Web Analytics → Add a site** → hostname `cardosolopes.net` → **Done** → copiar o token de **Manage site**.
+3. Repetir para `frcampos.github.io` → copiar o segundo token.
+4. Abrir `analytics.js` e substituir os dois marcadores:
+   ```js
+   var TOKENS = {
+     "cardosolopes.net":   "TOKEN_CARDOSOLOPES_AQUI",   // ← colar aqui
+     "frcampos.github.io": "TOKEN_GITHUB_AQUI"          // ← colar aqui
+   };
+   ```
+5. `git add . && git commit -m "Ativa estatísticas de acesso por domínio" && git push`.
+
+Cada página no `frcampos.github.io` reporta ao token do GitHub; as mesmas páginas em `cardosolopes.net` reportam ao token da escola. Dois painéis separados no Cloudflare, uma só base de código.
 
 Dá visitas, páginas mais vistas, origem do tráfego, país e dispositivo. Sem cookies, sem identificar pessoas, **sem necessidade de banner de consentimento**.
 
